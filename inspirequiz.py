@@ -70,3 +70,12 @@ def start_learning():
             input("Press any key to return to the main menu.")
 
 
+# Function for taking a quiz
+def take_quiz(topic):
+    print(f"\nStarting quiz for {topic}.")
+    # Placeholder for quiz questions - implement question generation here
+    print("Quiz functionality under construction.")
+    input("Press any key to return to the main menu.")
+
+
+
