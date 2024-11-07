@@ -61,13 +61,13 @@ def start_learning():
     except ValueError:
         print("Invalid input. Please enter a number.")
 
-        # Function for viewing resources
-        def view_resources(topic):
-            print(f"\nHere are resources for {topic}:")
-            # Placeholder for resources - would be replaced with actual content or links
-            print(f"- Summary of {topic}")
-            print("- Link: [URL]")
-            input("Press any key to return to the main menu.")
+# Function for viewing resources
+    def view_resources(topic):
+        print(f"\nHere are resources for {topic}:")
+# Placeholder for resources - would be replaced with actual content or links
+         print(f"- Summary of {topic}")
+         print("- Link: [URL]")
+         input("Press any key to return to the main menu.")
 
 
 # Function for taking a quiz
@@ -76,6 +76,28 @@ def take_quiz(topic):
     # Placeholder for quiz questions - implement question generation here
     print("Quiz functionality under construction.")
     input("Press any key to return to the main menu.")
+
+# Function for displaying a motivational quote
+def get_motivated():
+    print("\nChoose a motivational speaker:")
+    speakers = list(quotes.keys())
+    for i, speaker in enumerate(speakers, 1):
+        print(f"{i}. {speaker}")
+    
+    try:
+        speaker_choice = int(input("Enter the speaker number: ")) - 1
+        if 0 <= speaker_choice < len(speakers):
+            selected_speaker = speakers[speaker_choice]
+            quote = random.choice(quotes[selected_speaker])
+            print(f"\n\"{quote}\" – {selected_speaker}")
+        else:
+            print("Invalid choice. Returning to main menu.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
+# Run the application
+if _name_ == "_main_":
+    main()
 
 
 
