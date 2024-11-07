@@ -33,3 +33,40 @@ def main():
             break
         else:
             print("Invalid choice. Please enter a number between 1 and 3.")
+
+# Function for starting the learning session
+def start_learning():
+    topics = ["Computer Software/Hardware", "AI", "Linux System", "Intro to Python", "Data Structures and Algorithms"]
+    print("\nChoose a topic to learn:")
+    for i, topic in enumerate(topics, 1):
+        print(f"{i}. {topic}")
+    
+    try:
+        topic_choice = int(input("Enter the topic number: ")) - 1
+        if 0 <= topic_choice < len(topics):
+            selected_topic = topics[topic_choice]
+            print(f"\nYou selected: {selected_topic}")
+            print("1. View Resources")
+            print("2. Take Quiz")
+            action_choice = input("Choose an option (1 or 2): ")
+            
+            if action_choice == "1":
+                view_resources(selected_topic)
+            elif action_choice == "2":
+                take_quiz(selected_topic)
+            else:
+                print("Invalid choice. Returning to main menu.")
+        else:
+            print("Invalid topic number. Returning to main menu.")
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+
+        # Function for viewing resources
+        def view_resources(topic):
+            print(f"\nHere are resources for {topic}:")
+            # Placeholder for resources - would be replaced with actual content or links
+            print(f"- Summary of {topic}")
+            print("- Link: [URL]")
+            input("Press any key to return to the main menu.")
+
+
