@@ -3,10 +3,10 @@ import random
 
 # Connect to the MySQL database
 db = mysql.connector.connect(
-    host="localhost",  # Replace with your host (e.g., localhost)
-    user="root",       # Replace with your MySQL username
-    password="divine",  # Replace with your MySQL password
-    database="inspirequiz"  # The database to use
+    host="localhost",
+    user="root",
+    password="divine",
+    database="inspirequiz"
 )
 
 # Function to fetch a random quote at app start
