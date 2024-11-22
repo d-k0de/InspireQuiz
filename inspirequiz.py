@@ -18,3 +18,18 @@ def get_motivational_speakers():
     cursor.close()
     return speakers
 
+# Function to fetch a random quote from a specific speaker
+def get_quote_by_speaker(speaker):
+    cursor = db.cursor()
+    cursor.execute("SELECT quote FROM quotes WHERE speaker = %s ORDER BY RAND() LIMIT 1", (speaker,))
+    result = cursor.fetchone()
+    cursor.close()
+    return result[0] if result else None
+# Function to fetch topics from the database
+def get_topics():
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM topics")
+    topics = cursor.fetchall()
+    cursor.close()
+    return topics
+
