@@ -97,3 +97,19 @@ def get_random_question(topic_id, asked_questions):
     finally:
         cursor.close()
 
+# Function to fetch the highest score of the user for a specific topic
+def get_highest_score(user_id, topic_id):
+    cursor = db.cursor()
+    cursor.execute("SELECT MAX(score) FROM scores WHERE user_id = %s AND topic_id = %s", (user_id, topic_id))
+    result = cursor.fetchone()
+    cursor.close()
+    return result[0] if result[0] is not None else 0
+
+
+# Function to save the user's score
+def save_score(user_id, topic_id, score):
+    # First, check if the score is in the top 10 for this topic
+    cursor = db.cursor()
+    cursor.execute("SELECT COUNT(*) FROM scores WHERE topic_id = %s", (topic_id,))
+    count = cursor.fetchone()[0]
+    cursor.close()
