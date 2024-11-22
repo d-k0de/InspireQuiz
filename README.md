@@ -20,3 +20,22 @@ topics: Stores topic details.
 questions: Stores quiz questions.
 scores: Tracks user scores.
 resources: Stores topic-specific resources.
+
+Setup
+Clone or download the repository.
+Update the database connection details in the script:
+python
+Copy code
+db = mysql.connector.connect(
+    host="localhost",       # Replace with your host
+    user="root",            # Replace with your username
+    password="yourpassword",# Replace with your password
+    database="inspirequiz"  # Replace with your database name
+)
+
+
+Run the script:
+bash
+Copy code
+python inspirequiz.py
+
