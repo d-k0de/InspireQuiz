@@ -127,3 +127,11 @@ def save_score(user_id, topic_id, score):
         cursor.execute("SELECT score FROM scores WHERE topic_id = %s ORDER BY score DESC LIMIT 1 OFFSET 9", (topic_id,))
         lowest_score = cursor.fetchone()
         cursor.close()
+ 
+        if lowest_score and score > lowest_score[0]:
+            # If the new score is higher than the lowest in the top 10, update it
+            cursor = db.cursor()
+            cursor.execute("DELETE FROM scores WHERE user_id = %s AND topic_id = %s", (user_id, topic_id))  # Remove old score if exists
+            cursor.execute("INSERT INTO scores (user_id, topic_id, score) VALUES (%s, %s, %s)", (user_id, topic_id, score))
+            db.commit()
+            cursor.close()
