@@ -237,7 +237,7 @@ def start_learning():
 # Function for taking a quiz
 def take_quiz(topic_id, user_id):
     print(f"\nStarting quiz for AI")
-    print("There are 15 questions in this module.You can type 'END' at any time to stop the quiz and return to the menu.")
+    print("There are 20 questions in this module.You can type 'END' at any time to stop the quiz and return to the menu.")
     print("Please answer questions carefully, as any other input aside the available options will be treated as an incorrect answer. GOODLUCK!")
     
     asked_questions = []  # Initialize the list to track asked questions
