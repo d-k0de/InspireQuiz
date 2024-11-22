@@ -10,7 +10,7 @@ def get_random_start_quote():
 if result:
 print(f"\n\"{result[1]}\" – {result[0]}")
  else:
-    print("No.")
+    print("No motivational quotes available.")
 
 
 # Function to fetch motivational speakers
