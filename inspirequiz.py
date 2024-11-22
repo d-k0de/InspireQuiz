@@ -113,3 +113,17 @@ def save_score(user_id, topic_id, score):
     cursor.execute("SELECT COUNT(*) FROM scores WHERE topic_id = %s", (topic_id,))
     count = cursor.fetchone()[0]
     cursor.close()
+
+
+ # Only save the score if there are fewer than 10 scores, or the score is higher than the lowest one
+    if count < 10:
+        cursor = db.cursor()
+        cursor.execute("INSERT INTO scores (user_id, topic_id, score) VALUES (%s, %s, %s)", (user_id, topic_id, score))
+        db.commit()
+        cursor.close()
+    else:
+        # Retrieve the lowest score in the top 10
+        cursor = db.cursor()
+        cursor.execute("SELECT score FROM scores WHERE topic_id = %s ORDER BY score DESC LIMIT 1 OFFSET 9", (topic_id,))
+        lowest_score = cursor.fetchone()
+        cursor.close()
