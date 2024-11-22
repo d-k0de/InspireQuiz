@@ -237,7 +237,7 @@ def start_learning():
 # Function for taking a quiz
 def take_quiz(topic_id, user_id):
     print(f"\nStarting quiz for AI")
-    print("There are 20 questions in this module.You can type 'END' at any time to stop the quiz and return to the menu.")
+    print("There are 20 questions in this module. You can type 'END' at any time to stop the quiz and return to the menu.")
     print("Please answer questions carefully, as any other input aside the available options will be treated as an incorrect answer. GOODLUCK!")
     
     asked_questions = []  # Initialize the list to track asked questions
@@ -271,11 +271,11 @@ def take_quiz(topic_id, user_id):
             print("Correct answer!")
             total_score += 1
         else:
-            print(f"Incorrect answer. The correct answer was {question_data['correct_option']}.")
+            print(f"Incorrect answer. The correct answer is {question_data['correct_option']}.")
 
         question_count += 1
 
-    print(f"\nQuiz complete! Your total score: {total_score}/{question_count}")
+    print(f"\nQuiz complete! Your total score is: {total_score}/{question_count}")
 
 # Run the application
 if __name__ == "__main__":
