@@ -39,3 +39,20 @@ bash
 Copy code
 python inspirequiz.py
 
+
+
+How to Use
+Launch the Application: Displays a motivational quote upon startup.
+Choose an Option:
+Start Learning: Select a topic to view resources or take a quiz.
+Get Motivated: Browse quotes from motivational speakers.
+Exit: Close the application.
+Take a Quiz: Answer randomized questions, and your score will be tracked for the leaderboard.
+Future Enhancements
+User authentication for personalized profiles.
+Advanced analytics for quiz performance.
+Web or mobile version for broader accessibility.
+Enjoy learning and staying motivated with InspireQuiz! 😊
+
+
+
