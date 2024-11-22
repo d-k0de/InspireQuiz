@@ -24,7 +24,7 @@ def get_motivational_speakers():
 # Function to fetch a random quote from a specific speaker
 def get_quote_by_speaker(speaker):
     cursor = db.cursor()
-    cursor.execute("SELECT quote FROM quotes WHERE speaker = %s ORDER BY RAND() LIMIT 1", (speaker,))
+    cursor.execute(" quotes WHERE speaker = %s ORDER BY RAND() LIMIT 1", (speaker,))
     result = cursor.fetchone()
     cursor.close()
     return result[0] if result else None
