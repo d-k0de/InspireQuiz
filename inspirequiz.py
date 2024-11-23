@@ -3,10 +3,10 @@ import random
 
 # Connect to the MySQL database
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="divine",
-    database="inspirequiz"
+    host="localhost",  # Replace with your host (e.g., localhost)
+    user="root",       # Replace with your MySQL username
+    password="divine",  # Replace with your MySQL password
+    database="inspirequiz"  # The database to use
 )
 
 # Function to fetch a random quote at app start
@@ -35,6 +35,7 @@ def get_quote_by_speaker(speaker):
     result = cursor.fetchone()
     cursor.close()
     return result[0] if result else None
+
 # Function to fetch topics from the database
 def get_topics():
     cursor = db.cursor()
@@ -110,32 +111,22 @@ def get_highest_score(user_id, topic_id):
 
 # Function to save the user's score
 def save_score(user_id, topic_id, score):
-    # First, check if the score is in the top 10 for this topic
     cursor = db.cursor()
-    cursor.execute("SELECT COUNT(*) FROM scores WHERE topic_id = %s", (topic_id,))
-    count = cursor.fetchone()[0]
+    # Check if the combination of user_id and topic_id already exists
+    cursor.execute("SELECT score FROM scores WHERE user_id = %s AND topic_id = %s", (user_id, topic_id))
+    existing_score = cursor.fetchone()
+    
+    if existing_score:
+        # Update the score only if the new score is higher
+        if score > existing_score[0]:
+            cursor.execute("UPDATE scores SET score = %s WHERE user_id = %s AND topic_id = %s", (score, user_id, topic_id))
+            print(f"Updated your high score to {score}!")
+    else:
+        # Insert a new record if it doesn't exist
+        cursor.execute("INSERT INTO scores (user_id, topic_id, score) VALUES (%s, %s, %s)", (user_id, topic_id, score))
+    db.commit()
     cursor.close()
 
-    # Only save the score if there are fewer than 10 scores, or the score is higher than the lowest one
-    if count < 10:
-        cursor = db.cursor()
-        cursor.execute("INSERT INTO scores (user_id, topic_id, score) VALUES (%s, %s, %s)", (user_id, topic_id, score))
-        db.commit()
-        cursor.close()
-    else:
-        # Retrieve the lowest score in the top 10
-        cursor = db.cursor()
-        cursor.execute("SELECT score FROM scores WHERE topic_id = %s ORDER BY score DESC LIMIT 1 OFFSET 9", (topic_id,))
-        lowest_score = cursor.fetchone()
-        cursor.close()
-
-        if lowest_score and score > lowest_score[0]:
-            # If the new score is higher than the lowest in the top 10, update it
-            cursor = db.cursor()
-            cursor.execute("DELETE FROM scores WHERE user_id = %s AND topic_id = %s", (user_id, topic_id))  # Remove old score if exists
-            cursor.execute("INSERT INTO scores (user_id, topic_id, score) VALUES (%s, %s, %s)", (user_id, topic_id, score))
-            db.commit()
-            cursor.close()
 # Function to get Resources from db
 def get_resources_for_topic(topic_id):
     cursor = db.cursor()
@@ -235,10 +226,13 @@ def start_learning():
 
 # Function for taking a quiz
 def take_quiz(topic_id, user_id):
-    print(f"\nStarting quiz for AI")
+    # Get the user's highest score for this topic
+    highest_score = get_highest_score(user_id, topic_id)
+    print(f"\nStarting quiz for the selected topic.")
+    print(f"Your highest score for this topic is: {highest_score}")
     print("There are 20 questions in this module. You can type 'END' at any time to stop the quiz and return to the menu.")
-    print("Please answer questions carefully, as any other input aside the available options will be treated as an incorrect answer. GOODLUCK!")
-    
+    print("Please answer questions carefully, as any other input aside from the available options will be treated as an incorrect answer. GOOD LUCK!")
+
     asked_questions = []  # Initialize the list to track asked questions
     total_score = 0
     total_questions = 20
@@ -275,6 +269,14 @@ def take_quiz(topic_id, user_id):
         question_count += 1
 
     print(f"\nQuiz complete! Your total score is: {total_score}/{question_count}")
+
+    # Save the score if it's higher than the previous highest score
+    if total_score > highest_score:
+        save_score(user_id, topic_id, total_score)
+        print(f"Congratulations! You've achieved a new high score of {total_score}.")
+    else:
+        print(f"Your score for this attempt ({total_score}) did not exceed your high score of {highest_score}.")
+
 
 # Run the application
 if __name__ == "__main__":
