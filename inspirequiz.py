@@ -35,7 +35,13 @@ def get_quote_by_speaker(speaker):
     result = cursor.fetchone()
     cursor.close()
     return result[0] if result else None
-
+# Function to fetch topics from the database
+def get_topics():
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM topics")
+    topics = cursor.fetchall()
+    cursor.close()
+    return topics
 
 # Function to fetch a random question for a selected topic
 def get_random_question(topic_id, asked_questions):
