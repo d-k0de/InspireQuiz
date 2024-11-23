@@ -190,7 +190,7 @@ def view_resources(topic_id):
         for i, (title, link) in enumerate(resources, 1):
             print(f"{i}. {title} - {link}")
     else:
-        print("No resources found for this topic.")
+        print("Sorry, no available resources for this topic now.")
     input("\nPress any key to return to the main menu.")
 
 # Function for starting the learning session
