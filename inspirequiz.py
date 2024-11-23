@@ -229,7 +229,7 @@ def take_quiz(topic_id, user_id):
     # Get the user's highest score for this topic
     highest_score = get_highest_score(user_id, topic_id)
     print(f"\nStarting quiz for the selected topic.")
-    print(f"Your highest score for this topic is: {highest_score}")
+    print(f"Your highest score obtained for this topic is: {highest_score}")
     print("There are 20 questions in this module. You can type 'END' at any time to stop the quiz and return to the menu.")
     print("Please answer questions carefully, as any other input aside from the available options will be treated as an incorrect answer. GOOD LUCK!")
 
@@ -256,7 +256,7 @@ def take_quiz(topic_id, user_id):
         user_answer = input("Type END to stop quiz: ").upper()
 
         if user_answer == 'END':
-            print("Quiz ended by user. Returning to main menu.")
+            print("Quiz ended. Returning to main menu.")
             break
 
         # Check if the user's answer is correct
