@@ -5,7 +5,7 @@ import random
 db = mysql.connector.connect(
     host="localhost",  # Replace with your host (e.g., localhost)
     user="root",       # Replace with your MySQL username
-    password="******",  # Replace with your MySQL password
+    password="divine",  # Replace with your MySQL password
     database="inspirequiz"  # The database to use
 )
 
@@ -76,7 +76,7 @@ def get_random_question(topic_id, asked_questions):
             """
            #  print("Executing query without NOT IN filter...")
             cursor.execute(query, (topic_id,))
-        
+
         # Fetch result
         result = cursor.fetchone()
         # print(f"Query result: {result}")
@@ -115,7 +115,7 @@ def save_score(user_id, topic_id, score):
     # Check if the combination of user_id and topic_id already exists
     cursor.execute("SELECT score FROM scores WHERE user_id = %s AND topic_id = %s", (user_id, topic_id))
     existing_score = cursor.fetchone()
-    
+
     if existing_score:
         # Update the score only if the new score is higher
         if score > existing_score[0]:
@@ -230,8 +230,7 @@ def take_quiz(topic_id, user_id):
     highest_score = get_highest_score(user_id, topic_id)
     print(f"\nStarting quiz for the selected topic.")
     print(f"Your highest score obtained for this topic is: {highest_score}")
-    print("There are 20 questions in this module. You can type 'END' at any time to stop the quiz and return to the menu.")
-    print("Please answer questions carefully, as any other input aside from the available options will be treated as an incorrect answer. GOOD LUCK!")
+    print("You can type A, B, C, D OR a, b, c, d to choose answer, and 'END' at any time to stop the quiz.")  # This will only display once
 
     asked_questions = []  # Initialize the list to track asked questions
     total_score = 0
@@ -246,25 +245,25 @@ def take_quiz(topic_id, user_id):
             break
 
         # Display the question and options
-        print(f"\nQuestion {question_count + 1}: {question_data['question']}")
+        print(f"\nQ{question_count + 1}: {question_data['question']}")
         print(f"A) {question_data['options'][0]}")
         print(f"B) {question_data['options'][1]}")
         print(f"C) {question_data['options'][2]}")
         print(f"D) {question_data['options'][3]}")
 
-        # Ask the user for their answer, allowing for 'END' to stop the quiz
-        user_answer = input("Type END to stop quiz: ").upper()
+        # Ask the user for their answer, and allow 'END' to stop the quiz
+        user_answer = input("Your answer: ").upper()
 
         if user_answer == 'END':
-            print("Quiz ended. Returning to main menu.")
+            print("Quiz ended.")
             break
 
         # Check if the user's answer is correct
         if user_answer == question_data['correct_option']:
-            print("Correct answer!")
+            print("Correct!")
             total_score += 1
         else:
-            print(f"Incorrect answer. The correct answer is {question_data['correct_option']}.")
+            print(f"Incorrect! The correct answer is {question_data['correct_option']}.")
 
         question_count += 1
 
@@ -273,12 +272,13 @@ def take_quiz(topic_id, user_id):
     # Save the score if it's higher than the previous highest score
     if total_score > highest_score:
         save_score(user_id, topic_id, total_score)
-        print(f"Congratulations! You've achieved a new high score of {total_score}.")
+        print(f"New high score: {total_score}!")
     else:
-        print(f"Your score for this attempt ({total_score}) did not exceed your high score of {highest_score}.")
+        print(f"Your score did not exceed your high score of {highest_score}.")
+
+
 
 
 # Run the application
 if __name__ == "__main__":
     main()
-
